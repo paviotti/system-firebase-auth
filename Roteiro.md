@@ -27,3 +27,16 @@
 
 - em UserProvider.jsx indentifcar usuário conectado https://firebase.google.com/docs/auth/web/manage-users?hl=pt&authuser=0
   com onAuthStateChanged(auth, (user) => {})
+
+# git
+
+- git init
+- git config --global user.name "paviotti"
+- git config --global user.email crpaviotti@hotmail.com
+- git add .
+- git git commit -m "First step with Firebase auth"
+- git switch -c 00-firebase-auth
+- git branch
+- git remote add origin https://github.com/paviotti/system-firebase-auth.git
+- git push -u origin 00-firebase-auth
+- 1:04:40

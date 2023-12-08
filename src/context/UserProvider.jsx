@@ -1,4 +1,3 @@
-import { PropTypes } from "prop-types";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -13,7 +12,9 @@ export const UserContext = createContext();
 
 // verifica se o usuário está logado
 
-const UserProvider = ({ children }) => {
+const UserProvider = ({
+  children /*eslint-disable-line react/prop-types */,
+}) => {
   // torna o usuário logado genérico para toda a aplicação
   const [user, setUser] = useState(false);
 

@@ -1,24 +1,38 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { UserContext } from "../context/UserProvider";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { errorsFirebase } from "../utils/errosFirebase";
+import FormError from "./FormError";
+import { formValidate } from "../utils/formValidate";
+import FormInput from "./FormInput";
 
 const Register = () => {
-  const [email, setEmail] = useState("teste@test.com");
-  const [password, setPassword] = useState("123456");
   const navegate = useNavigate();
 
   // registerUser recebe setUser para gravar email e password
   const { registerUser } = useContext(UserContext);
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(email, password);
-    navegate("/"); // redireciona para a página inicial
+  const { required, patternEmail, minLength, validateTrim, validateEquals } =
+    formValidate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    setError,
+  } = useForm();
+
+  const onSubmit = async ({ email, password }) => {
     try {
       await registerUser(email, password);
-      console.log("Usuário criado");
+
+      navegate("/"); // redireciona para a página inicial
     } catch (error) {
       console.log(error.code);
-      alert("Este email já existe");
+      // erro personalizado, setError, verifica email já existente
+      setError("firebase", {
+        message: errorsFirebase(error.code),
+      });
     }
   };
 
@@ -26,19 +40,38 @@ const Register = () => {
     <>
       <h1>Register</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
+      <FormError error={errors.firebase} />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormInput
           type="email"
           placeholder="Digite Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
+          {...register("email", {
+            required,
+            pattern: patternEmail,
+          })}
+        ></FormInput>
+
+        <FormError error={errors.email} />
+
+        <FormInput
           type="password"
           placeholder="Digite password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          {...register("password", {
+            minLength,
+            validate: validateTrim,
+          })}
+        ></FormInput>
+
+        <FormError error={errors.password} />
+        <FormInput
+          type="password"
+          placeholder="Confirme password"
+          {...register("repassword", {
+            validate: validateEquals(getValues),
+          })}
+        ></FormInput>
+
+        <FormError error={errors.repassword} />
         <button type="submit">Registrar</button>
       </form>
     </>

@@ -3,7 +3,9 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserProvider";
 
 // Verifca se o usuario esta logado, senão manda logar
-const RequireAuth = ({ children }) => {
+const RequireAuth = ({
+  children /*eslint-disable-line react/prop-types */,
+}) => {
   const { user } = useContext(UserContext);
   if (!user) {
     return <Navigate to="/login" />;
