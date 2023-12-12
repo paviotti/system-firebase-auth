@@ -39,4 +39,3 @@
 - git branch
 - git remote add origin https://github.com/paviotti/system-firebase-auth.git
 - git push -u origin 00-firebase-auth
-- 1:04:40

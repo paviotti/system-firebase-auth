@@ -4,21 +4,39 @@
 export const errorsFirebase = (code) => {
   switch (code) {
     case "auth/email-already-in-use":
-      return "Este email já existe";
+      return {
+        code: "email",
+        message: "Este email já existe.",
+      };
 
     case "auth/invalid-email":
-      return "Formato de e-mail inválido";
+      return {
+        code: "email",
+        message: "Formato de e-mail inválido.",
+      };
 
     case "auth/weak-password":
-      return "Senha fraca, minimo 6 caracteres";
+      return {
+        code: "password",
+        message: "Senha fraca, minimo 6 caracteres.",
+      };
 
     case "auth/user-not-found":
-      return "Usuário não registrado";
+      return {
+        code: "email",
+        message: "Usuário não registrado.",
+      };
 
     case "auth/invalid-login-credentials":
-      return "Usuário não registrado, ou senha incorreta";
+      return {
+        code: "email",
+        message: "Usuário não registrado, ou senha incorreta.",
+      };
 
     default:
-      return "Erro desconhecido no servidor";
+      return {
+        code: "email",
+        message: "Erro desconhecido no servidor.",
+      };
   }
 };

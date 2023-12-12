@@ -30,9 +30,8 @@ const Register = () => {
     } catch (error) {
       console.log(error.code);
       // erro personalizado, setError, verifica email já existente
-      setError("firebase", {
-        message: errorsFirebase(error.code),
-      });
+      const { code, message } = errorsFirebase(error.code);
+      setError(code, { message });
     }
   };
 
@@ -40,7 +39,6 @@ const Register = () => {
     <>
       <h1>Register</h1>
 
-      <FormError error={errors.firebase} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="email"
@@ -50,7 +48,6 @@ const Register = () => {
             pattern: patternEmail,
           })}
         ></FormInput>
-
         <FormError error={errors.email} />
 
         <FormInput
@@ -67,7 +64,7 @@ const Register = () => {
           type="password"
           placeholder="Confirme password"
           {...register("repassword", {
-            validate: validateEquals(getValues),
+            validate: validateEquals(getValues("password")),
           })}
         ></FormInput>
 

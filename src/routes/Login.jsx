@@ -26,16 +26,15 @@ const Login = () => {
     } catch (error) {
       console.log(error.code);
       // erro personalizado, setError, verifica email já existente
-      setError("firebase", {
-        message: errorsFirebase(error.code),
-      });
+      const { code, message } = errorsFirebase(error.code);
+      setError(code, { message });
     }
   };
 
   return (
     <>
       <div>Login</div>
-      <FormError error={errors.firebase} />
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="email"
