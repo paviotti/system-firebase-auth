@@ -6,6 +6,8 @@ import { errorsFirebase } from "../utils/errosFirebase";
 import FormError from "./FormError";
 import { formValidate } from "../utils/formValidate";
 import FormInput from "./FormInput";
+import TitleForm from "./TitleForm";
+import Button from "./Button";
 
 const Register = () => {
   const navegate = useNavigate();
@@ -37,39 +39,46 @@ const Register = () => {
 
   return (
     <>
-      <h1>Register</h1>
+      <TitleForm text={"Register"} />
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormInput
+          label="Digite seu e-mail"
           type="email"
           placeholder="Digite Email"
           {...register("email", {
             required,
             pattern: patternEmail,
           })}
+          error={errors.email}
         ></FormInput>
         <FormError error={errors.email} />
 
         <FormInput
+          label="Digite sua senha"
           type="password"
           placeholder="Digite password"
           {...register("password", {
             minLength,
             validate: validateTrim,
           })}
+          error={errors.password}
         ></FormInput>
 
         <FormError error={errors.password} />
         <FormInput
+          label="Confirme sua senha"
           type="password"
           placeholder="Confirme password"
           {...register("repassword", {
             validate: validateEquals(getValues("password")),
           })}
+          error={errors.password}
         ></FormInput>
 
         <FormError error={errors.repassword} />
-        <button type="submit">Registrar</button>
+        {/* <button type="submit">Registrar</button> */}
+        <Button text="Registrar" type="submit" />
       </form>
     </>
   );

@@ -40,4 +40,27 @@
 - git remote add origin https://github.com/paviotti/system-firebase-auth.git
 - git push -u origin 00-firebase-auth
 
-tailwindcss 15:20
+# taillwincss
+
+- https://flowbite.com/docs/getting-started/react/
+- npm install -D tailwindcss postcss autoprefixer
+- npx tailwindcss init -p
+- alterar tailwind.config.js:
+  content: [
+  './src/**/*.{js,jsx,ts,tsx}',
+  ],
+- alterar index.css:
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+- intalar flowbite
+- npm install flowbite flowbite-react
+
+- alterar tailwind.config.js:
+  require('flowbite/plugin')
+  'node*modules/flowbite-react/lib/esm/\**/\_.js'
+
+- index.js, importar flowbite:
+- neste caso é main.jsx
+  import "flowbite"
