@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/UserProvider";
 import { useForm } from "react-hook-form";
 import { errorsFirebase } from "../utils/errosFirebase";
@@ -8,9 +8,11 @@ import FormError from "../components/FormError";
 import FormInput from "../components/FormInput";
 import TitleForm from "../components/TitleForm";
 import Button from "../components/Button";
+import ButtonLoading from "../components/ButtonLoading";
 
 const Login = () => {
   const { loginUser } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
   const navegate = useNavigate();
   const { required, patternEmail, minLength, validateTrim } = formValidate();
   const {
@@ -22,6 +24,7 @@ const Login = () => {
 
   const onSubmit = async ({ email, password }) => {
     try {
+      setLoading(true); // habilita o loading do botão
       await loginUser(email, password);
 
       navegate("/"); // redireciona para a página inicial
@@ -30,6 +33,8 @@ const Login = () => {
       // erro personalizado, setError, verifica email já existente
       const { code, message } = errorsFirebase(error.code);
       setError(code, { message });
+    } finally {
+      setLoading(false); // desabilita o loading do botão
     }
   };
 
@@ -58,10 +63,12 @@ const Login = () => {
             validate: validateTrim,
           })}
           error={errors.password}
-        ></FormInput>
+        >
+          {" "}
+        </FormInput>
+
+        <Button text="Login" type="submit" loading={loading} />
         <FormError error={errors.password} />
-        {/* <button type="submit">Login</button> */}
-        <Button text="Login" type="submit" />
       </form>
     </>
   );

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/UserProvider";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -8,12 +8,14 @@ import { formValidate } from "../utils/formValidate";
 import FormInput from "./FormInput";
 import TitleForm from "./TitleForm";
 import Button from "./Button";
+import ButtonLoading from "./ButtonLoading";
 
 const Register = () => {
   const navegate = useNavigate();
 
   // registerUser recebe setUser para gravar email e password
   const { registerUser } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
   const { required, patternEmail, minLength, validateTrim, validateEquals } =
     formValidate();
   const {
@@ -26,6 +28,7 @@ const Register = () => {
 
   const onSubmit = async ({ email, password }) => {
     try {
+      setLoading(true); // habilita o loading do botão)
       await registerUser(email, password);
 
       navegate("/"); // redireciona para a página inicial
@@ -34,6 +37,8 @@ const Register = () => {
       // erro personalizado, setError, verifica email já existente
       const { code, message } = errorsFirebase(error.code);
       setError(code, { message });
+    } finally {
+      setLoading(false); // desabilita o loading do botão
     }
   };
 
@@ -78,7 +83,8 @@ const Register = () => {
 
         <FormError error={errors.repassword} />
         {/* <button type="submit">Registrar</button> */}
-        <Button text="Registrar" type="submit" />
+        <Button text="Registrar" type="submit" loading={loading} />
+        {/* <Button text="Registrar" type="submit" /> */}
       </form>
     </>
   );

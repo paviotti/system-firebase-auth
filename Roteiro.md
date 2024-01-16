@@ -59,8 +59,15 @@
 
 - alterar tailwind.config.js:
   require('flowbite/plugin')
-  'node*modules/flowbite-react/lib/esm/\**/\_.js'
+  'node\*modules/flowbite-react/lib/esm/\*\*/\_.js'
 
 - index.js, importar flowbite:
 - neste caso é main.jsx
   import "flowbite"
+
+# intalar pacote nanoid
+
+- npm i nanoid
+- import {nanoid} from "nanoid"
+
+parei 39:26
