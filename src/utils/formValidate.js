@@ -1,11 +1,15 @@
 // O arquivo é .js porque devolve funcionalidades em JS e valida o formulario de Resgister.jsx
 
-export const formValidate = (getValues) => {
+export const formValidate = () => {
   return {
     required: { value: true, message: "Campo obrigatório" },
     patternEmail: {
       value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
       message: "E-mail inválido",
+    },
+    patternURL: {
+      value: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i,
+      message: "URL inválido",
     },
     minLength: {
       value: 6,

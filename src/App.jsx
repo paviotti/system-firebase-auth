@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { UserContext } from "./context/UserProvider";
 import LayoutContainerForm from "./components/layouts/LayoutContainerForm";
 import Perfil from "./routes/Perfil";
+import LayoutRedirect from "./components/layouts/LayoutRedirect";
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -31,7 +32,9 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path="/:nanoid" element={<LayoutRedirect />}>
+          <Route index element={<NotFound />} />
+        </Route>
       </Routes>
     </>
   );

@@ -70,4 +70,4 @@
 - npm i nanoid
 - import {nanoid} from "nanoid"
 
-parei 39:26
+parei 1:01:15

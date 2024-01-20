@@ -11,6 +11,7 @@ import {
 import { useState } from "react";
 import { auth, db } from "../firebase";
 import { nanoid } from "nanoid";
+import { getDoc } from "firebase/firestore";
 // console.log("dbbb", db);
 export const useFirestore = () => {
   // vai retornar um objeto
@@ -91,9 +92,30 @@ export const useFirestore = () => {
     } catch (error) {
       console.log(error);
       setError(error.message);
+    } finally {
+      setLoading((prev) => ({ ...prev, updateData: false }));
     }
-    setLoading((prev) => ({ ...prev, updateData: false }));
   };
 
-  return { data, error, loading, getData, addData, deleteData, updateData };
+  const searchData = async (nanoid) => {
+    try {
+      const docRef = doc(db, "urls", nanoid);
+      const docSnap = await getDoc(docRef);
+      return docSnap;
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    }
+  };
+
+  return {
+    data,
+    error,
+    loading,
+    getData,
+    addData,
+    deleteData,
+    updateData,
+    searchData,
+  };
 };
